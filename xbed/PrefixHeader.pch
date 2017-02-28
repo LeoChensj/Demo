@@ -1,0 +1,151 @@
+//
+//  PrefixHeader.pch
+//  xbed
+//
+//  Created by Leo.Chen on 16/7/5.
+//  Copyright © 2016年 Leo.Chen. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import "GlobalConfiguration.h"
+
+//-----pod-----//
+#import "ReactiveCocoa.h"
+#import "AFNetworking.h"
+#import "IQKeyboardManager.h"
+#import "Mantle.h"
+#import "Masonry.h"
+#import "SDWebImageManager.h"
+#import "UIImageView+WebCache.h"
+#import "STAlertView.h"
+#import "MF_Base64Additions.h"
+#import "GTMBase64.h"
+#import "NSString+MD5.h"
+#import "UIview+FrameEx.h"
+#import "UIColor+Hex.h"
+#import "NSDate+Helper.h"
+#import "NSDate+Calendar.h"
+#import "UIView+Toast.h"
+#import "JPFPSStatus.h"
+#import "FSTextView.h"
+#import "LeoTextField.h"
+//-----pod-----//
+
+
+
+//other
+#import "TouchEventScrollView.h"
+#import "DES.h"
+#import "DBManager.h"
+#import "UILabel+Size.h"
+#import "UILabel+LineSpace.h"
+#import "NSObject+JSONCategories.h"
+#import "NSString+JSONCategories.h"
+#import "TouchView.h"
+#import "RootViewController.h"
+#import "HeadView.h"
+#import "XbedViewController.h"
+#import "LoadingView.h"
+#import "CalendarHandle.h"
+
+//可信人脸识别
+#import "FaceRecognitionHeader.h"
+
+
+
+//系统版本、设备版本
+#define iOS_Version             [[UIDevice currentDevice] systemVersion].floatValue
+#define More_iOS7               (iOS_Version>=7)
+#define More_iOS8               (iOS_Version>=8)
+#define More_iOS9               (iOS_Version>=9)
+#define More_iOS10              (iOS_Version>=10)
+#define Less_iOS8               (iOS_Version<8)
+#define iPhone_4                (MAIN_SCREEN_HEIGHT<568)
+#define iPhone_5                (MAIN_SCREEN_HEIGHT>=568 && MAIN_SCREEN_HEIGHT<667)
+#define iPhone_6                (MAIN_SCREEN_HEIGHT>=667 && MAIN_SCREEN_HEIGHT<736)
+#define iPhone_6_Plus           (MAIN_SCREEN_HEIGHT>=736)
+
+
+
+//屏幕尺寸、其他各种尺寸
+#define MAIN_SCREEN_HEIGHT          [[UIScreen mainScreen] bounds].size.height
+#define MAIN_SCREEN_WIDTH           [[UIScreen mainScreen] bounds].size.width
+#define XSCALE                      (([[UIScreen mainScreen] bounds].size.width)/(375))
+#define Scale                       [UIScreen mainScreen].scale
+#define NAVBAR_HEIGHT               64
+#define TABBAR_HEIGHT               48
+#define STATUS_HEIGHT               20
+#define LINE_WIDTH                  (1.0/[UIScreen mainScreen].scale)
+#define Screen_Pixel_width          (NSInteger)([[UIScreen mainScreen] bounds].size.width*[UIScreen mainScreen].scale)
+
+
+//字体
+#define GlobalFontName              @"Helvetica"
+#define GlobalBoldFontName          @"Helvetica-Bold"
+#define GlobalBoldItalicFontName    @"Helvetica-BoldOblique"
+#define Font(fontSize)              [UIFont fontWithName:GlobalFontName size:fontSize]
+#define FontBold(fontSize)          [UIFont fontWithName:GlobalBoldFontName size:fontSize]
+
+
+//颜色
+#define COLOR(R, G, B, A)           [UIColor colorWithRed:R/255.0 green:G/255.0 blue:B/255.0 alpha:A]
+#define RGB(r,g,b)                  COLOR(r,g,b,1.0f)
+#define Blue_Color                  [UIColor colorWithCSS:@"#3483ee"]
+#define Blue_Unable_Color           [UIColor colorWithCSS:@"#7cadef"]
+#define Light_Blue_Color            [UIColor colorWithCSS:@"#c2dafa"]
+#define Blue_Click_Color            [UIColor colorWithCSS:@"#1865cd"]
+#define White_Click_COLOR           [UIColor colorWithCSS:@"#f4f6f6"]
+#define Orange_Color                [UIColor colorWithCSS:@"#ffbc06"]
+#define Red_Color                   [UIColor colorWithCSS:@"#ff4545"]
+#define Light_Red_Color             [UIColor colorWithCSS:@"#fff5f5"]
+#define Gray_Color                  [UIColor colorWithCSS:@"#cccccc"]
+#define Background_Color            [UIColor colorWithCSS:@"#e8ebf1"]
+#define Tabbar_Line_Color           [UIColor colorWithCSS:@"#dedede"]
+#define Seg_Line_Color              [UIColor colorWithCSS:@"#e8ebf1"]
+#define Main_Text_Color             [UIColor colorWithCSS:@"#323232"]
+#define Main_Text_Color2            [UIColor colorWithCSS:@"#222222"]
+#define Secondary_Text_Color        [UIColor colorWithCSS:@"#646464"]
+#define Secondary_Text_Color2       [UIColor colorWithCSS:@"#909090"]
+
+//other
+#ifdef DEBUG
+    #define NSLog(...)              NSLog(__VA_ARGS__)
+#else
+    #define NSLog(...)              {}
+#endif
+
+#define WS(weakSelf)                            __weak __typeof(&*self)weakSelf = self;
+#define PlaceholderImage                        [UIImage imageNamed:@"placeholder_image.jpg"]
+#define PlaceholderHead                         [UIImage imageNamed:@"pic_xbed_default"]
+
+#define PushVC(VC_class, animate)               VC_class *vc = [[VC_class alloc] init]; \
+                                                [[RootViewController getInstance] pushViewController:vc animated:animate]
+#define PushVCWithVM(VC_class, viewModel)       VC_class *vc = [[VC_class alloc] init]; \
+                                                vc.viewModel = viewModel; \
+                                                [[RootViewController getInstance] pushViewController:vc animated:YES]
+
+#define PresentVC(VC_class)                     VC_class *vc = [[VC_class alloc] init]; \
+                                                [self presentViewController:vc animated:YES completion:nil];
+#define PresentVCWithVM(VC_class, viewModel)    VC_class *vc = [[VC_class alloc] init]; \
+                                                vc.viewModel = viewModel; \
+                                                [self presentViewController:vc animated:YES completion:nil];
+#define DismissVC(animate)                      [self dismissViewControllerAnimated:animate completion:nil];
+#define PopVC(animate)                          [[RootViewController getInstance] popViewControllerAnimated:animate];
+
+#define OpenUrl(urlStr)                         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]]
+#define CallPhone(phoneNo)                      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", phoneNo]]]
+
+//telprompt
+
+
+//String
+//#define Customer_Service_Telephone              @"400-609-9222"
+#define Wifi_Password                           @"Xbed4006099222"
+#define Apple_AppId                             @"1089828791"
+const static NSString *Json_Data_Key =          @"json_data";
+
+
+
+#endif /* PrefixHeader_pch */

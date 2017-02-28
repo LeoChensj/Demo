@@ -1,0 +1,1 @@
+../../../BKPhotoBrowser/BKPhotoBrowser/BKPhotoItemView.h
